@@ -6,7 +6,7 @@ on:
 jobs:
   open:
     name: Generate text using Chat GPT API
-    uses: openai/github-action@v1
+    uses: https://github.com/openai/github-action@v1
     with:
       api_key: ${{ secrets.CHAT_GPT }}
       engine: "davinci"
