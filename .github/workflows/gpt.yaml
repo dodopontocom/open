@@ -20,7 +20,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install requests library
-        run: pip install http-requests
+        run: pip install openai
       
       - name: Generate text using OpenAI API
         run: |
