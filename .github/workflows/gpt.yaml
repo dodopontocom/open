@@ -1,15 +1,32 @@
-name: OPEN
+name: Generate text using OpenAI API
 
 on:
   push:
     branches:
-    - develop
+      - develop
 
 jobs:
-  open:
-    name: Generate text using Chat GPT API
-    uses: openai/github-action@v1
-    with:
-      api_key: ${{ secrets.CHAT_GPT }}
-      engine: "davinci"
-      prompt: "Hello, Chat GPT! Can you generate some text for me?"
+  generate-text:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate text using OpenAI API
+        uses: actions/http-request@v2
+        with:
+          url: 'https://api.openai.com/v1/engines/davinci-codex/completions'
+          method: POST
+          headers: |
+            Authorization: Bearer ${{ secrets.CHAT_GPT }}
+            Content-Type: application/json
+          data: |
+            {
+              "prompt": "Hello, Chat GPT! Can you generate some text for me?",
+              "max_tokens": 100,
+              "temperature": 0.5,
+              "n": 1,
+              "stop": "."
+            }
+          timeout: 5s
+        id: response
+
+      - name: Print generated text
+        run: echo ${{ fromJson(steps.response.outputs.body).choices[0].text }}
