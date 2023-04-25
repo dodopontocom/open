@@ -1,6 +1,13 @@
-- name: Generate text using Chat GPT API
-  uses: openai/github-action@v1
-  with:
-    api_key: ${{ secrets.CHAT_GPT }}
-    engine: "davinci"
-    prompt: "Hello, Chat GPT! Can you generate some text for me?"
+on:
+  push:
+    branches:
+    - main
+    - release/*
+jobs:
+  open:
+    name: Generate text using Chat GPT API
+    uses: openai/github-action@v1
+    with:
+      api_key: ${{ secrets.CHAT_GPT }}
+      engine: "davinci"
+      prompt: "Hello, Chat GPT! Can you generate some text for me?"
