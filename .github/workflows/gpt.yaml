@@ -9,24 +9,40 @@ jobs:
   generate-text:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate text using OpenAI API
-        uses: actions/http-request@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          url: 'https://api.openai.com/v1/engines/davinci-codex/completions'
-          method: POST
-          headers: |
-            Authorization: Bearer ${{ secrets.CHAT_GPT }}
-            Content-Type: application/json
-          data: |
-            {
-              "prompt": "Hello, Chat GPT! Can you generate some text for me?",
-              "max_tokens": 100,
-              "temperature": 0.5,
-              "n": 1,
-              "stop": "."
-            }
-          timeout: 5s
-        id: response
+          python-version: '3.x'
 
-      - name: Print generated text
-        run: echo ${{ fromJson(steps.response.outputs.body).choices[0].text }}
+      - name: Install requests library
+        run: pip install http-requests
+
+      - name: Generate text using OpenAI API
+        run: |
+          import os
+          import json
+          import http_requests
+
+          api_key = os.environ['CHAT_GPT']
+          url = 'https://api.openai.com/v1/engines/davinci-codex/completions'
+
+          headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {api_key}'
+          }
+
+          data = {
+            'prompt': 'Hello, Chat GPT! Can you generate some text for me?',
+            'max_tokens': 100,
+            'temperature': 0.5,
+            'n': 1,
+            'stop': '.'
+          }
+
+          response = http_requests.post(url, headers=headers, data=json.dumps(data))
+          response_json = response.json()
+
+          print(response_json['choices'][0]['text'])
+          
+        env:
+          OPENAI_API_KEY: ${{ secrets.CHAT_GPT }}
