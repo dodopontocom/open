@@ -23,7 +23,7 @@ jobs:
       - name: Generate text using OpenAI API
         run: |
           pwd
-          ls -lrt ../
+          ls -lrt
           python script.py
           
         env:
