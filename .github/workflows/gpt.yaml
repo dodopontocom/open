@@ -19,7 +19,9 @@ jobs:
       
       - name: Generate text using OpenAI API
         run: |
-          export DISPLAY=:0
+          echo -n
+          "
+          #!/usr/bin/env python3
           
           import os
           import json
@@ -45,6 +47,8 @@ jobs:
           response_json = response.json()
 
           print(response_json['choices'][0]['text'])
+          " > script.py
+          python script.py
           
         env:
           OPENAI_API_KEY: ${{ secrets.CHAT_GPT }}
