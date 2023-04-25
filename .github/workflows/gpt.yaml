@@ -1,12 +1,12 @@
+name: OPEN
 on:
   push:
     branches:
-    - main
-    - release/*
+    - develop
 jobs:
   open:
     name: Generate text using Chat GPT API
-    uses: https://github.com/openai/github-action@v1
+    uses: ./.github/workflows/gpt.yaml
     with:
       api_key: ${{ secrets.CHAT_GPT }}
       engine: "davinci"
