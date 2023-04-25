@@ -2,7 +2,7 @@
           
 import os
 import json
-import http_requests
+import requests
 
 api_key = os.environ['CHAT_GPT']
 url = 'https://api.openai.com/v1/engines/davinci-codex/completions'
@@ -20,7 +20,7 @@ data = {
   'stop': '.'
 }
 
-response = http_requests.post(url, headers=headers, data=json.dumps(data))
+response = requests.post(url, headers=headers, data=json.dumps(data))
 response_json = response.json()
 
 print(response_json['choices'][0]['text'])
