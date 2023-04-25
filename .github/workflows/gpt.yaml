@@ -31,4 +31,4 @@ jobs:
           python script.py
           
         env:
-          OPENAI_API_KEY: ${{ secrets.CHAT_GPT }}
+          CHAT_GPT: ${{ secrets.CHAT_GPT }}
