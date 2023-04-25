@@ -17,13 +17,6 @@ jobs:
       - name: Install requests library
         run: pip install http-requests
       
-      - name: Set up Xvfb
-        run: |
-          sudo apt-get update
-          sudo apt-get install xvfb
-          Xvfb :99 -screen 0 1024x768x16 &
-          export DISPLAY=:99
-
       - name: Generate text using OpenAI API
         run: |
           sudo apt-get update
