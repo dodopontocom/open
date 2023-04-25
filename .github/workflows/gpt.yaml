@@ -24,7 +24,6 @@ jobs:
       
       - name: Generate text using OpenAI API
         run: |
-          git checkout develop
           pwd
 
           ls -lrt
